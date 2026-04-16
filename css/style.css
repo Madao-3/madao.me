@@ -594,6 +594,71 @@ p {
   color: var(--text-secondary);
 }
 
+/* --- Asset Detail Cards --- */
+.detail-cards-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-card {
+  margin-bottom: 0;
+}
+
+.detail-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.detail-metric {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.detail-metric .metric-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.detail-metric .metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.detail-metric .metric-sub {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.detail-note {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--accent-blue);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.inline-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+}
+
 /* --- Section Title --- */
 .section-title {
   font-size: 0.8rem;
@@ -778,6 +843,15 @@ p {
 
   .divergence-content {
     flex-direction: column;
+  }
+
+  .detail-cards-row {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-metrics-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
   }
 
   .position-badge {

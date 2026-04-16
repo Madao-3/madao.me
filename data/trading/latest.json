@@ -119,11 +119,51 @@
     { "asset": "10Y Treasury", "value": "4.31%", "change": "-", "direction": "neutral", "note": { "en": "Holding at elevated range", "zh": "维持在高位区间" } },
     { "asset": "2Y Treasury", "value": "3.81%", "change": "-", "direction": "neutral", "note": { "en": "Yield curve positive slope (+51.7 bps)", "zh": "收益率曲线呈正斜率 (+51.7 bps)" } },
     { "asset": "DXY", "value": "98.00", "change": { "en": "Falling", "zh": "下跌" }, "direction": "down", "note": { "en": "Testing key support, at 6-week low", "zh": "测试关键支撑位，处于 6 周低点" } },
-    { "asset": "Gold", "value": "$4,838.81", "change": "-0.02%", "direction": "neutral", "note": { "en": "Near all-time highs, safe-haven demand persists", "zh": "维持在历史高位附近，避险需求仍在" } },
+    { "asset": { "en": "Gold (XAU)", "zh": "黄金 (XAU)" }, "value": "$4,838.81", "change": "-0.02%", "direction": "neutral", "note": { "en": "Near all-time highs, safe-haven demand persists", "zh": "维持在历史高位附近，避险需求仍在" } },
     { "asset": "WTI Crude", "value": "$91.19", "change": "-0.10%", "direction": "neutral", "note": { "en": "Includes ~$20 geopolitical supply premium", "zh": "包含约 $20 的地缘政治供应溢价" } },
     { "asset": "BTC", "value": "$74,813.22", "change": { "en": "Choppy", "zh": "震荡" }, "direction": "neutral", "note": { "en": "Consolidating near $75,000 resistance", "zh": "在 $75,000 阻力位附近盘整" } },
     { "asset": "VIX", "value": "18.08", "change": "-1.53%", "direction": "down", "note": { "en": "Elevated but trending down", "zh": "偏高但处于下降趋势" } }
   ],
+
+  "btc_detail": {
+    "price": "$74,813.22",
+    "change_24h": "+1.24%",
+    "fear_greed_index": 62,
+    "exchange_flow_direction": {
+      "en": "Net Outflow",
+      "zh": "净流出"
+    },
+    "exchange_flow_note": {
+      "en": "-8,420 BTC (7d), accumulation trend",
+      "zh": "-8,420 BTC（7日），呈积累趋势"
+    },
+    "note": {
+      "en": "BTC is consolidating near the $75,000 resistance level. Exchange net outflows suggest holders are moving coins to cold storage, a bullish accumulation signal. The Fear & Greed Index at 62 indicates moderate greed — not yet overheated. Key level to watch: a breakout above $76,500 could trigger momentum toward $80K.",
+      "zh": "BTC 在 $75,000 阻力位附近盘整。交易所净流出表明持有者正在将币转移至冷钱包，这是看涨的积累信号。恐惧贪婪指数 62 表示适度贪婪——尚未过热。关键关注位：突破 $76,500 可能触发向 $80K 的动能。"
+    }
+  },
+
+  "gold_detail": {
+    "spot_price": "$4,838.81",
+    "change": "-0.02%",
+    "gold_silver_ratio": "88.3",
+    "gold_silver_note": {
+      "en": "Elevated — silver underperforming, historically mean-reverts",
+      "zh": "偏高——白银表现落后，历史上会均值回归"
+    },
+    "key_driver": {
+      "en": "Safe Haven",
+      "zh": "避险需求"
+    },
+    "driver_note": {
+      "en": "Central bank buying + geopolitical risk premium",
+      "zh": "央行购金 + 地缘政治风险溢价"
+    },
+    "note": {
+      "en": "Gold remains near all-time highs, supported by persistent central bank buying (China, India, Turkey) and elevated geopolitical risk. The gold/silver ratio at 88.3 is historically stretched, suggesting silver may outperform in a catch-up rally. Real yields remain a headwind at current levels, but safe-haven flows are dominating.",
+      "zh": "黄金维持在历史高位附近，受到央行持续购金（中国、印度、土耳其）和地缘政治风险升高的支撑。金银比 88.3 处于历史高位，暗示白银可能在追赶行情中表现更优。实际收益率在当前水平仍构成逆风，但避险资金流正在主导行情。"
+    }
+  },
 
   "risks": [
     {

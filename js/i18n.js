@@ -36,6 +36,15 @@
       'trading.risks_section': 'Key Risks',
       'trading.divergence_section': 'Divergence Alert',
       'trading.divergence_title': 'Divergence Alert',
+      'trading.asset_detail_section': 'Asset Deep Dive',
+      'trading.btc_title': 'Bitcoin (BTC)',
+      'trading.btc_price': 'Price',
+      'trading.fear_greed': 'Fear & Greed Index',
+      'trading.exchange_flow': 'Exchange Net Flow',
+      'trading.gold_title': 'Gold (XAU)',
+      'trading.gold_spot': 'Spot Price',
+      'trading.gold_silver_ratio': 'Gold/Silver Ratio',
+      'trading.gold_driver': 'Key Driver',
 
       // Health page
       'health.title': 'Health Module',
@@ -85,6 +94,15 @@
       'trading.risks_section': '关键风险提示',
       'trading.divergence_section': '背离预警',
       'trading.divergence_title': '背离预警',
+      'trading.asset_detail_section': '资产深度分析',
+      'trading.btc_title': '比特币 (BTC)',
+      'trading.btc_price': '价格',
+      'trading.fear_greed': '恐惧贪婪指数',
+      'trading.exchange_flow': '交易所净流向',
+      'trading.gold_title': '黄金 (XAU)',
+      'trading.gold_spot': '现货价格',
+      'trading.gold_silver_ratio': '金银比',
+      'trading.gold_driver': '核心驱动',
 
       // Health page
       'health.title': '健康模块',

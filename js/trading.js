@@ -10,8 +10,16 @@
   var cachedData = null;
 
   // --- Shorthand ---
-  function t(key) { return window.MadaoI18n.t(key); }
-  function L(val) { return window.MadaoI18n.localize(val); }
+  function t(key) { return window.MadaoI18n ? window.MadaoI18n.t(key) : key; }
+  function L(val) {
+    if (val === null || val === undefined) return '';
+    if (window.MadaoI18n) return window.MadaoI18n.localize(val);
+    // Fallback: if val is {en, zh}, return en
+    if (typeof val === 'object' && !Array.isArray(val)) {
+      return val.en !== undefined ? val.en : String(val);
+    }
+    return val;
+  }
 
   // --- Utility ---
   function getScoreClass(score) {
@@ -41,6 +49,7 @@
   }
 
   function getLiquidityBadgeClass(condition) {
+    if (!condition || typeof condition !== 'string') return 'badge-yellow';
     var c = condition.toLowerCase();
     if (c.includes('expan')) return 'badge-green';
     if (c.includes('tight') || c.includes('contract') || c.includes('紧')) return 'badge-red';
@@ -48,10 +57,34 @@
   }
 
   function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
     if (typeof str !== 'string') str = String(str);
     var div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  function getFearGreedClass(value) {
+    if (value >= 75) return 'badge-green';
+    if (value >= 50) return 'badge-yellow';
+    if (value >= 25) return 'badge-yellow';
+    return 'badge-red';
+  }
+
+  function getFearGreedLabel(value) {
+    var lang = window.MadaoI18n ? window.MadaoI18n.getLang() : 'en';
+    if (lang === 'zh') {
+      if (value >= 75) return '极度贪婪';
+      if (value >= 55) return '贪婪';
+      if (value >= 45) return '中性';
+      if (value >= 25) return '恐惧';
+      return '极度恐惧';
+    }
+    if (value >= 75) return 'Extreme Greed';
+    if (value >= 55) return 'Greed';
+    if (value >= 45) return 'Neutral';
+    if (value >= 25) return 'Fear';
+    return 'Extreme Fear';
   }
 
   // --- Render Functions ---
@@ -159,7 +192,7 @@
       var changeClass = getChangeClass(item.direction);
       html +=
         '<tr>' +
-          '<td class="asset-name">' + escapeHtml(item.asset) + '</td>' +
+          '<td class="asset-name">' + escapeHtml(L(item.asset)) + '</td>' +
           '<td class="asset-value">' + escapeHtml(item.value) + '</td>' +
           '<td class="asset-change ' + changeClass + '">' + escapeHtml(L(item.change)) + '</td>' +
           '<td class="asset-note">' + escapeHtml(L(item.note)) + '</td>' +
@@ -199,7 +232,7 @@
     var el = document.getElementById('divergence-card');
     var div = data.divergence;
     var statusText = L(div.status);
-    var isNone = statusText === 'None' || statusText === '无明显背离';
+    var isNone = !statusText || statusText === 'None' || statusText === '无明显背离';
     var badgeClass = isNone ? 'badge-green' : 'badge-red';
 
     el.innerHTML =
@@ -222,6 +255,84 @@
     }
   }
 
+  // --- BTC Detail Card ---
+  function renderBtcDetail(data) {
+    var el = document.getElementById('btc-detail-card');
+    if (!el || !data.btc_detail) return;
+    var btc = data.btc_detail;
+    var changeClass = (btc.change_24h || '').startsWith('-') ? 'change-down' : 'change-up';
+    var fgValue = btc.fear_greed_index || 0;
+    var fgClass = getFearGreedClass(fgValue);
+    var fgLabel = getFearGreedLabel(fgValue);
+    var flowClass = 'change-neutral';
+    var flowDir = L(btc.exchange_flow_direction);
+    if (typeof flowDir === 'string') {
+      var fd = flowDir.toLowerCase();
+      if (fd.includes('inflow') || fd.includes('流入')) flowClass = 'change-down';
+      if (fd.includes('outflow') || fd.includes('流出')) flowClass = 'change-up';
+    }
+
+    el.innerHTML =
+      '<div class="card-header">' +
+        '<div class="card-title">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 8h3.5a2 2 0 0 1 0 4h-3.5"/><path d="M9.5 12h4.5a2 2 0 0 1 0 4h-4.5"/><line x1="10" y1="6" x2="10" y2="18"/><line x1="13" y1="6" x2="13" y2="18"/></svg>' +
+          escapeHtml(t('trading.btc_title')) +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-metrics-grid">' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.btc_price')) + '</div>' +
+          '<div class="metric-value">' + escapeHtml(btc.price) + '</div>' +
+          '<div class="metric-sub ' + changeClass + '">' + escapeHtml(btc.change_24h) + '</div>' +
+        '</div>' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.fear_greed')) + '</div>' +
+          '<div class="metric-value">' + fgValue + '</div>' +
+          '<div class="metric-sub"><span class="inline-badge ' + fgClass + '">' + escapeHtml(fgLabel) + '</span></div>' +
+        '</div>' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.exchange_flow')) + '</div>' +
+          '<div class="metric-value ' + flowClass + '">' + escapeHtml(L(btc.exchange_flow_direction)) + '</div>' +
+          '<div class="metric-sub">' + escapeHtml(L(btc.exchange_flow_note)) + '</div>' +
+        '</div>' +
+      '</div>' +
+      (btc.note ? '<div class="detail-note">' + escapeHtml(L(btc.note)) + '</div>' : '');
+  }
+
+  // --- Gold Detail Card ---
+  function renderGoldDetail(data) {
+    var el = document.getElementById('gold-detail-card');
+    if (!el || !data.gold_detail) return;
+    var gold = data.gold_detail;
+    var changeClass = (gold.change || '').startsWith('-') ? 'change-down' : 'change-up';
+
+    el.innerHTML =
+      '<div class="card-header">' +
+        '<div class="card-title">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>' +
+          escapeHtml(t('trading.gold_title')) +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-metrics-grid">' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.gold_spot')) + '</div>' +
+          '<div class="metric-value">' + escapeHtml(gold.spot_price) + '</div>' +
+          '<div class="metric-sub ' + changeClass + '">' + escapeHtml(gold.change) + '</div>' +
+        '</div>' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.gold_silver_ratio')) + '</div>' +
+          '<div class="metric-value">' + escapeHtml(gold.gold_silver_ratio) + '</div>' +
+          '<div class="metric-sub">' + escapeHtml(L(gold.gold_silver_note)) + '</div>' +
+        '</div>' +
+        '<div class="detail-metric">' +
+          '<div class="metric-label">' + escapeHtml(t('trading.gold_driver')) + '</div>' +
+          '<div class="metric-value">' + escapeHtml(L(gold.key_driver)) + '</div>' +
+          '<div class="metric-sub">' + escapeHtml(L(gold.driver_note)) + '</div>' +
+        '</div>' +
+      '</div>' +
+      (gold.note ? '<div class="detail-note">' + escapeHtml(L(gold.note)) + '</div>' : '');
+  }
+
   // --- Build Page Structure ---
   function buildStructure() {
     var main = document.getElementById('trading-content');
@@ -238,6 +349,11 @@
             '<thead id="market-table-head"></thead>' +
             '<tbody id="market-table-body"></tbody>' +
           '</table>' +
+        '</div>' +
+        '<div class="section-title" data-i18n="trading.asset_detail_section">' + escapeHtml(t('trading.asset_detail_section')) + '</div>' +
+        '<div class="detail-cards-row">' +
+          '<div id="btc-detail-card" class="card detail-card"></div>' +
+          '<div id="gold-detail-card" class="card detail-card"></div>' +
         '</div>' +
         '<div class="section-title" data-i18n="trading.risks_section">' + escapeHtml(t('trading.risks_section')) + '</div>' +
         '<ul id="risks-list" class="risk-list"></ul>' +
@@ -256,6 +372,8 @@
     renderSummary(data);
     renderMarketTableHeaders();
     renderMarketOverview(data);
+    renderBtcDetail(data);
+    renderGoldDetail(data);
     renderRisks(data);
     renderDivergence(data);
     renderDisclaimer(data);
