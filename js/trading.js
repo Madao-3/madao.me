@@ -1,13 +1,17 @@
 /* ========================================
    MADAO Trading Dashboard — Premium Renderer
-   SVG gauge, Lucide icons, staggered animations
+   SVG gauge, Lucide icons, staggered animations,
+   Date-based report archive navigation
    ======================================== */
 
 (function () {
   'use strict';
 
-  var DATA_URL = 'data/trading/latest.json';
+  var BASE_DATA_PATH = 'data/trading/';
   var cachedData = null;
+  var reportIndex = null;
+  var currentDate = null;
+  var dropdownOpen = false;
 
   // --- Shorthand ---
   function t(key) { return window.MadaoI18n ? window.MadaoI18n.t(key) : key; }
@@ -106,6 +110,30 @@
     return 'Extreme Fear';
   }
 
+  function getScoreBadgeClass(score) {
+    if (score >= 90) return 'badge-green';
+    if (score >= 70) return 'badge-green';
+    if (score >= 50) return 'badge-yellow';
+    if (score >= 30) return 'badge-yellow';
+    return 'badge-red';
+  }
+
+  function getScoreRangeShort(score) {
+    var lang = window.MadaoI18n ? window.MadaoI18n.getLang() : 'en';
+    if (lang === 'zh') {
+      if (score >= 90) return 'Fat Pitch';
+      if (score >= 70) return '高确信';
+      if (score >= 50) return '中等';
+      if (score >= 30) return '低确信';
+      return '资本保全';
+    }
+    if (score >= 90) return 'Fat Pitch';
+    if (score >= 70) return 'High';
+    if (score >= 50) return 'Moderate';
+    if (score >= 30) return 'Low';
+    return 'Preserve';
+  }
+
   // --- SVG Gauge ---
   function buildGaugeSVG(score, size) {
     var r = (size / 2) - 12;
@@ -165,7 +193,94 @@
     return 'circle';
   }
 
-  // --- Render Functions ---
+  // =============================================
+  // DATE NAVIGATOR
+  // =============================================
+  function renderDateNav() {
+    var el = document.getElementById('date-nav');
+    if (!el || !reportIndex) return;
+
+    var reports = reportIndex.reports || [];
+    var latestDate = reportIndex.latest;
+    var isLatest = currentDate === latestDate;
+    var displayDate = currentDate || latestDate;
+
+    // Build report list items
+    var listHtml = '';
+    for (var i = 0; i < reports.length; i++) {
+      var rpt = reports[i];
+      var isActive = rpt.date === displayDate;
+      var isRptLatest = rpt.date === latestDate;
+      var scoreBadgeClass = getScoreBadgeClass(rpt.score);
+      var rangeLabel = L(rpt.range);
+
+      listHtml +=
+        '<div class="report-list-item' + (isActive ? ' active' : '') + '" data-date="' + escapeHtml(rpt.date) + '">' +
+          '<div class="report-date">' +
+            escapeHtml(rpt.date) +
+            (isRptLatest ? '<span class="latest-tag">' + escapeHtml(t('trading.latest_report')) + '</span>' : '') +
+          '</div>' +
+          '<div class="report-meta">' +
+            '<span class="report-score ' + scoreBadgeClass + '">' + rpt.score.toFixed(1) + '</span>' +
+            '<span class="report-range ' + scoreBadgeClass + '">' + escapeHtml(rangeLabel) + '</span>' +
+          '</div>' +
+        '</div>';
+    }
+
+    el.innerHTML =
+      '<div class="report-list-wrapper">' +
+        '<button class="date-nav-toggle" id="date-nav-toggle">' +
+          '<i data-lucide="calendar" class="icon"></i>' +
+          '<span>' + escapeHtml(displayDate) + '</span>' +
+          '<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4 6 8 10 12 6"/></svg>' +
+        '</button>' +
+        '<div class="report-list" id="report-list">' +
+          (listHtml || '<div style="padding:1rem;text-align:center;color:var(--text-muted)">' + escapeHtml(t('trading.no_reports')) + '</div>') +
+        '</div>' +
+      '</div>';
+
+    // Bind toggle
+    var toggleBtn = document.getElementById('date-nav-toggle');
+    var listEl = document.getElementById('report-list');
+
+    if (toggleBtn && listEl) {
+      toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdownOpen = !dropdownOpen;
+        toggleBtn.classList.toggle('open', dropdownOpen);
+        listEl.classList.toggle('open', dropdownOpen);
+      });
+
+      // Bind date selection
+      var items = listEl.querySelectorAll('.report-list-item');
+      for (var j = 0; j < items.length; j++) {
+        items[j].addEventListener('click', function () {
+          var date = this.getAttribute('data-date');
+          if (date && date !== currentDate) {
+            loadReportByDate(date);
+          }
+          dropdownOpen = false;
+          toggleBtn.classList.remove('open');
+          listEl.classList.remove('open');
+        });
+      }
+    }
+
+    // Close on outside click
+    document.addEventListener('click', function () {
+      if (dropdownOpen) {
+        dropdownOpen = false;
+        var tb = document.getElementById('date-nav-toggle');
+        var rl = document.getElementById('report-list');
+        if (tb) tb.classList.remove('open');
+        if (rl) rl.classList.remove('open');
+      }
+    });
+  }
+
+  // =============================================
+  // RENDER FUNCTIONS
+  // =============================================
   function renderHeroScore(data) {
     var el = document.getElementById('hero-score');
     var scoreClass = getScoreClass(data.composite_score);
@@ -186,7 +301,11 @@
       '<div class="position-badge animate-in animate-in-delay-3">' +
         '<span class="label">' + escapeHtml(t('trading.position_label')) + '</span>' +
         '<span class="value">' + escapeHtml(L(data.position_advice)) + '</span>' +
-      '</div>';
+      '</div>' +
+      '<div id="date-nav" class="date-nav"></div>';
+
+    // Render date navigator inside hero
+    renderDateNav();
   }
 
   function renderLiquidity(data) {
@@ -242,16 +361,16 @@
             '<span class="signal-name"><i data-lucide="' + iconName + '" class="icon"></i>' + escapeHtml(sigName) + '</span>' +
             '<span class="signal-weight">' + escapeHtml(t('trading.weight_prefix')) + ' ' + escapeHtml(sig.weight) + '</span>' +
           '</div>' +
-          '<div class="signal-bar-container">' +
-            '<svg width="100%" height="6" style="display:block;">' +
+          '<div class="signal-progress">' +
+            '<svg width="100%" height="6" style="border-radius:3px;overflow:hidden">' +
               '<defs>' + getSignalGradient(sig.score, gradId) + '</defs>' +
-              '<rect x="0" y="0" width="100%" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>' +
-              '<rect x="0" y="0" width="' + sig.score + '%" height="6" rx="3" fill="url(#' + gradId + ')" style="transition: width 1.2s cubic-bezier(0.4,0,0.2,1);"/>' +
+              '<rect width="100%" height="6" fill="rgba(255,255,255,0.04)" rx="3"/>' +
+              '<rect width="' + sig.score + '%" height="6" fill="url(#' + gradId + ')" rx="3"/>' +
             '</svg>' +
           '</div>' +
           '<div class="signal-score-row">' +
-            '<span class="signal-score" style="color: ' + color + ';">' + sig.score + '</span>' +
-            '<span class="signal-status ' + badgeClass + '">' + escapeHtml(L(sig.status)) + '</span>' +
+            '<span class="signal-score" style="color:' + color + '">' + sig.score + '</span>' +
+            '<span class="signal-badge ' + badgeClass + '">' + escapeHtml(L(sig.status)) + '</span>' +
           '</div>' +
           '<div class="signal-reason">' + escapeHtml(L(sig.reason)) + '</div>' +
         '</div>';
@@ -263,10 +382,10 @@
     var el = document.getElementById('summary-card');
     el.innerHTML =
       '<div class="card-header">' +
-        '<div class="card-title"><i data-lucide="message-square-text" class="icon"></i>' + escapeHtml(t('trading.summary_title')) + '</div>' +
+        '<div class="card-title"><i data-lucide="file-text" class="icon"></i>' + escapeHtml(t('trading.summary_title')) + '</div>' +
       '</div>' +
       '<div class="summary-text">' + escapeHtml(L(data.trading_summary)) + '</div>' +
-      (data.trading_quote ? '<div class="summary-quote">"' + escapeHtml(data.trading_quote) + '"</div>' : '');
+      (data.trading_quote ? '<blockquote class="summary-quote">"' + escapeHtml(L(data.trading_quote)) + '"</blockquote>' : '');
   }
 
   function renderMarketOverview(data) {
@@ -278,41 +397,35 @@
         '<th>' + escapeHtml(t('trading.th_asset')) + '</th>' +
         '<th>' + escapeHtml(t('trading.th_value')) + '</th>' +
         '<th>' + escapeHtml(t('trading.th_change')) + '</th>' +
-        '<th>' + escapeHtml(t('trading.th_note')) + '</th>' +
+        '<th class="asset-note">' + escapeHtml(t('trading.th_note')) + '</th>' +
       '</tr>';
 
-    var html = '';
+    var rows = '';
     for (var i = 0; i < data.market_overview.length; i++) {
-      var item = data.market_overview[i];
-      var changeClass = getChangeClass(item.direction);
-      var assetName = L(item.asset);
+      var m = data.market_overview[i];
+      var changeClass = getChangeClass(m.direction);
+      var arrow = getChangeArrow(m.direction);
+      var assetName = L(m.asset);
       var iconName = getAssetIcon(assetName);
-      html +=
+
+      rows +=
         '<tr>' +
           '<td class="asset-name"><i data-lucide="' + iconName + '" class="icon"></i>' + escapeHtml(assetName) + '</td>' +
-          '<td class="asset-value">' + escapeHtml(item.value) + '</td>' +
-          '<td class="asset-change ' + changeClass + '">' + getChangeArrow(item.direction) + escapeHtml(L(item.change)) + '</td>' +
-          '<td class="asset-note">' + escapeHtml(L(item.note)) + '</td>' +
+          '<td class="asset-value">' + escapeHtml(m.value) + '</td>' +
+          '<td class="' + changeClass + '">' + arrow + escapeHtml(L(m.change)) + '</td>' +
+          '<td class="asset-note">' + escapeHtml(L(m.note)) + '</td>' +
         '</tr>';
     }
-    bodyEl.innerHTML = html;
+    bodyEl.innerHTML = rows;
   }
 
   function renderBtcDetail(data) {
     var el = document.getElementById('btc-detail-card');
     if (!el || !data.btc_detail) return;
     var btc = data.btc_detail;
-    var changeClass = (btc.change_24h || '').startsWith('-') ? 'change-down' : 'change-up';
     var fgValue = btc.fear_greed_index || 0;
     var fgClass = getFearGreedClass(fgValue);
     var fgLabel = getFearGreedLabel(fgValue);
-    var flowClass = 'change-neutral';
-    var flowDir = L(btc.exchange_flow_direction);
-    if (typeof flowDir === 'string') {
-      var fd = flowDir.toLowerCase();
-      if (fd.includes('inflow') || fd.includes('流入')) flowClass = 'change-down';
-      if (fd.includes('outflow') || fd.includes('流出')) flowClass = 'change-up';
-    }
 
     el.innerHTML =
       '<div class="card-header">' +
@@ -322,7 +435,7 @@
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.btc_price')) + '</div>' +
           '<div class="metric-value">' + escapeHtml(btc.price) + '</div>' +
-          '<div class="metric-sub ' + changeClass + '">' + escapeHtml(btc.change_24h) + '</div>' +
+          '<div class="metric-sub ' + getChangeClass(btc.change_direction) + '">' + getChangeArrow(btc.change_direction) + escapeHtml(btc.change_24h) + '</div>' +
         '</div>' +
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.fear_greed')) + '</div>' +
@@ -331,18 +444,17 @@
         '</div>' +
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.exchange_flow')) + '</div>' +
-          '<div class="metric-value ' + flowClass + '">' + escapeHtml(L(btc.exchange_flow_direction)) + '</div>' +
-          '<div class="metric-sub">' + escapeHtml(L(btc.exchange_flow_note)) + '</div>' +
+          '<div class="metric-value">' + escapeHtml(L(btc.exchange_flow_direction)) + '</div>' +
+          '<div class="metric-sub">' + escapeHtml(L(btc.exchange_flow_detail)) + '</div>' +
         '</div>' +
       '</div>' +
-      (btc.note ? '<div class="detail-note">' + escapeHtml(L(btc.note)) + '</div>' : '');
+      '<div class="detail-analysis">' + escapeHtml(L(btc.analysis)) + '</div>';
   }
 
   function renderGoldDetail(data) {
     var el = document.getElementById('gold-detail-card');
     if (!el || !data.gold_detail) return;
     var gold = data.gold_detail;
-    var changeClass = (gold.change || '').startsWith('-') ? 'change-down' : 'change-up';
 
     el.innerHTML =
       '<div class="card-header">' +
@@ -352,7 +464,7 @@
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.gold_spot')) + '</div>' +
           '<div class="metric-value">' + escapeHtml(gold.spot_price) + '</div>' +
-          '<div class="metric-sub ' + changeClass + '">' + escapeHtml(gold.change) + '</div>' +
+          '<div class="metric-sub ' + getChangeClass(gold.change_direction) + '">' + getChangeArrow(gold.change_direction) + escapeHtml(gold.change) + '</div>' +
         '</div>' +
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.gold_silver_ratio')) + '</div>' +
@@ -362,10 +474,10 @@
         '<div class="detail-metric">' +
           '<div class="metric-label">' + escapeHtml(t('trading.gold_driver')) + '</div>' +
           '<div class="metric-value">' + escapeHtml(L(gold.key_driver)) + '</div>' +
-          '<div class="metric-sub">' + escapeHtml(L(gold.driver_note)) + '</div>' +
+          '<div class="metric-sub">' + escapeHtml(L(gold.key_driver_detail)) + '</div>' +
         '</div>' +
       '</div>' +
-      (gold.note ? '<div class="detail-note">' + escapeHtml(L(gold.note)) + '</div>' : '');
+      '<div class="detail-analysis">' + escapeHtml(L(gold.analysis)) + '</div>';
   }
 
   function renderRisks(data) {
@@ -375,7 +487,7 @@
       var risk = data.risks[i];
       html +=
         '<li class="risk-item animate-in animate-in-delay-' + (i + 1) + '">' +
-          '<div class="risk-title"><i data-lucide="alert-triangle" class="icon"></i>' + escapeHtml(L(risk.title)) + '</div>' +
+          '<div class="risk-title"><i data-lucide="alert-triangle" class="icon risk-icon"></i>' + escapeHtml(L(risk.title)) + '</div>' +
           '<div class="risk-desc">' + escapeHtml(L(risk.description)) + '</div>' +
         '</li>';
     }
@@ -386,16 +498,16 @@
     var el = document.getElementById('divergence-card');
     var div = data.divergence;
     var statusText = L(div.status);
-    var isNone = !statusText || statusText === 'None' || statusText === '无明显背离';
-    var badgeClass = isNone ? 'badge-green' : 'badge-red';
+    var hasDiv = statusText && statusText.toLowerCase && statusText.toLowerCase() !== 'none' && statusText !== '无明显背离';
+    var badgeClass = hasDiv ? 'badge-red' : 'badge-green';
 
     el.innerHTML =
       '<div class="card-header">' +
         '<div class="card-title"><i data-lucide="git-compare-arrows" class="icon"></i>' + escapeHtml(t('trading.divergence_title')) + '</div>' +
+        '<span class="card-badge ' + badgeClass + '">' + escapeHtml(statusText) + '</span>' +
       '</div>' +
       '<div class="divergence-content">' +
-        '<span class="divergence-status ' + badgeClass + '">' + escapeHtml(statusText) + '</span>' +
-        '<div class="divergence-desc">' + escapeHtml(L(div.description)) + '</div>' +
+        '<p>' + escapeHtml(L(div.description)) + '</p>' +
       '</div>';
   }
 
@@ -484,6 +596,30 @@
     window.dispatchEvent(new Event('trading-rendered'));
   }
 
+  // --- Load report by date ---
+  async function loadReportByDate(date) {
+    currentDate = date;
+    try {
+      var url = BASE_DATA_PATH + date + '.json';
+      var resp = await fetch(url);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      cachedData = await resp.json();
+      renderAll(cachedData);
+    } catch (err) {
+      console.error('Failed to load report for ' + date + ':', err);
+      // Try falling back to latest
+      try {
+        var resp2 = await fetch(BASE_DATA_PATH + 'latest.json');
+        if (!resp2.ok) throw new Error('HTTP ' + resp2.status);
+        cachedData = await resp2.json();
+        currentDate = reportIndex ? reportIndex.latest : date;
+        renderAll(cachedData);
+      } catch (err2) {
+        showError(err2.message);
+      }
+    }
+  }
+
   // --- Language change handler ---
   window.addEventListener('langchange', function () {
     if (cachedData) {
@@ -495,9 +631,27 @@
   async function init() {
     showLoading();
     try {
-      var resp = await fetch(DATA_URL);
+      // Load report index first
+      var indexResp = await fetch(BASE_DATA_PATH + 'index.json');
+      if (indexResp.ok) {
+        reportIndex = await indexResp.json();
+        currentDate = reportIndex.latest;
+      }
+
+      // Load the latest report data
+      var dataUrl = currentDate
+        ? BASE_DATA_PATH + currentDate + '.json'
+        : BASE_DATA_PATH + 'latest.json';
+
+      var resp = await fetch(dataUrl);
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       cachedData = await resp.json();
+
+      // Set currentDate from data if not set
+      if (!currentDate && cachedData.report_date) {
+        currentDate = cachedData.report_date;
+      }
+
       renderAll(cachedData);
     } catch (err) {
       console.error('Failed to load trading data:', err);

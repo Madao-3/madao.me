@@ -17,7 +17,7 @@
       'nav.work': 'Work',
 
       // Trading page
-      'trading.report_subtitle': 'Druckenmiller Macro Signal Report',
+      'trading.report_subtitle': 'Daily Macro Signal Report',
       'trading.composite_title': 'Composite Conviction Score',
       'trading.position_label': 'Suggested Position',
       'trading.liquidity_title': 'USD Liquidity Status',
@@ -64,6 +64,12 @@
       'work.chip4': 'Meeting Notes',
       'work.chip5': 'Goal Progress',
 
+      // Date navigator
+      'trading.report_history': 'Report History',
+      'trading.latest_report': 'Latest',
+      'trading.no_reports': 'No reports available',
+      'trading.score_label': 'Score',
+
       // Common
       'loading': 'Loading trading data...',
       'error.title': 'Failed to load data'
@@ -75,7 +81,7 @@
       'nav.work': '工作',
 
       // Trading page
-      'trading.report_subtitle': 'Druckenmiller 每日宏观交易信号报告',
+      'trading.report_subtitle': '每日宏观交易信号报告',
       'trading.composite_title': '综合确信度分数',
       'trading.position_label': '建议仓位',
       'trading.liquidity_title': '美元流动性状态',
@@ -121,6 +127,12 @@
       'work.chip3': '代码提交',
       'work.chip4': '会议记录',
       'work.chip5': '目标进度',
+
+      // Date navigator
+      'trading.report_history': '历史报告',
+      'trading.latest_report': '最新',
+      'trading.no_reports': '暂无报告',
+      'trading.score_label': '分数',
 
       // Common
       'loading': '正在加载交易数据...',
