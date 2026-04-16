@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MADAO — Work</title>
-  <meta name="description" content="MADAO AI Agent Dashboard — Work log and project tracking.">
+  <meta name="description" content="MADAO AI Agent Dashboard — Work Module">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
 
@@ -16,46 +17,39 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">MADAO</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
       <div class="nav-right">
         <ul class="nav-links" id="nav-links">
           <li>
             <a href="index.html">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <i data-lucide="candlestick-chart" class="nav-icon"></i>
               <span data-i18n="nav.trading">Trading</span>
             </a>
           </li>
           <li>
             <a href="health.html">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <i data-lucide="heart-pulse" class="nav-icon"></i>
               <span data-i18n="nav.health">Health</span>
             </a>
           </li>
           <li>
             <a href="work.html" class="active">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <i data-lucide="briefcase" class="nav-icon"></i>
               <span data-i18n="nav.work">Work</span>
             </a>
           </li>
         </ul>
         <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">中文</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
     </div>
   </nav>
 
   <!-- Content -->
-  <main>
+  <main class="container">
     <div class="coming-soon">
-      <svg class="coming-soon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-      </svg>
+      <i data-lucide="briefcase" class="coming-soon-icon"></i>
       <h2 data-i18n="work.title">Work Module</h2>
       <p data-i18n="work.desc">Work log, project tracking, and productivity insights coming soon. This module will serve as a personal knowledge base and task management system.</p>
       <div class="preview-areas">
@@ -70,5 +64,13 @@
 
   <script src="js/i18n.js"></script>
   <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.lucide) lucide.createIcons();
+    });
+    window.addEventListener('langchange', function() {
+      setTimeout(function() { if (window.lucide) lucide.createIcons(); }, 50);
+    });
+  </script>
 </body>
 </html>
