@@ -1,0 +1,116 @@
+{
+  "report_date": "2026-04-16",
+  "market_data_date": "2026-04-15",
+  "composite_score": 64.0,
+  "score_range": "Moderate",
+  "score_range_label": "Moderate (50-69)",
+  "position_advice": "50-69%（标准仓位）",
+  "position_advice_en": "50-69% (Standard Position)",
+
+  "liquidity_status": {
+    "condition": "中性偏紧",
+    "condition_en": "Neutral-Tight",
+    "summary": "当前美元流动性处于中性偏紧状态，但中期存在转向（Pivot）的积极信号。",
+    "fed_balance_sheet": "6.70 万亿美元",
+    "fed_balance_sheet_change": "+180 亿美元（周环比）",
+    "rrp": "2.23 亿美元",
+    "rrp_note": "已基本耗尽（一年前为 547 亿美元）",
+    "tga": "7800 亿美元",
+    "tga_note": "受税季影响快速攀升，预计报税日附近达 1.025 万亿美元",
+    "net_liquidity": "5.95 万亿美元",
+    "net_liquidity_change": "+2450 亿美元（过去 7 天）",
+    "details": "量化紧缩（QT）已于 2025 年 12 月结束，美联储正开始购买短期国债（T-bills），首批 405 亿美元的注入计划于 4 月 16 日启动。隔夜逆回购（RRP）余额已基本耗尽，RRP 作为流动性缓冲的作用已经消失。受税季影响，TGA 余额正在快速攀升，短期内市场将面临流动性抽水的逆风。"
+  },
+
+  "signals": [
+    {
+      "name": "流动性制度",
+      "name_en": "Liquidity Regime",
+      "weight": "35%",
+      "weight_num": 35,
+      "score": 60,
+      "status": "中性转向",
+      "status_en": "Neutral Pivot",
+      "reason": "净流动性短期受 TGA 攀升压制，RRP 缓冲耗尽。但美联储结束 QT 并开始购买 T-bills 是明确的转向信号。短期中性，中期偏多。"
+    },
+    {
+      "name": "前瞻盈利",
+      "name_en": "Forward Earnings",
+      "weight": "25%",
+      "weight_num": 25,
+      "score": 78,
+      "status": "强劲超预期",
+      "status_en": "Strong Beat",
+      "reason": "Q1 盈利预估增长 13.2%，早期财报显示 78% 的公司盈利超预期，平均幅度达 14.3%。前瞻 EPS 持续上修，共识尚未完全定价。"
+    },
+    {
+      "name": "市场广度",
+      "name_en": "Market Breadth",
+      "weight": "25%",
+      "weight_num": 25,
+      "score": 55,
+      "status": "喜忧参半",
+      "status_en": "Mixed",
+      "reason": "10 日涨跌线（A/D Line）创去年 7 月以来新高，但标普 500 位于 200 日均线以上的股票比例仅为 54.87%。指数创新高但广度不足 60%，显示出科技大盘股集中驱动的特征。"
+    },
+    {
+      "name": "价格信号",
+      "name_en": "Price Signal",
+      "weight": "15%",
+      "weight_num": 15,
+      "score": 65,
+      "status": "暂无背离",
+      "status_en": "No Divergence",
+      "reason": "财报季刚开始，尚未出现明显的'盈利超预期但股价下跌'的背离现象。银行股财报强劲且股价上涨，信号正常。"
+    }
+  ],
+
+  "trading_summary": "流动性在抽水，TGA 正在吸走资金，RRP 已经空了。美联储买短债是好消息，但远水解不了近渴。这不是 fat pitch。64分，标准仓位，50-69%。不加码，等催化剂。\n\n盈利很强，分析师在追赶，这是好事。但看看广度——纳斯达克连涨 11 天，标普创新高，但只有 55% 的股票在 200 日均线以上。这是少数大盘股在拉升，不是全面牛市。目前还没看到盈利好却被抛售的背离，但要盯紧。",
+  "trading_quote": "It's liquidity that moves markets, not earnings.",
+
+  "market_overview": [
+    { "asset": "S&P 500", "value": "7,022.95", "change": "+0.80%", "direction": "up", "note": "创历史新高" },
+    { "asset": "Nasdaq", "value": "24,016.02", "change": "+1.59%", "direction": "up", "note": "创历史新高，连续 11 天站上 24000" },
+    { "asset": "Dow Jones", "value": "48,463.72", "change": "-0.15%", "direction": "down", "note": "表现落后，反映市场广度问题" },
+    { "asset": "10Y Treasury", "value": "4.31%", "change": "-", "direction": "neutral", "note": "维持在高位区间" },
+    { "asset": "2Y Treasury", "value": "3.81%", "change": "-", "direction": "neutral", "note": "收益率曲线呈正斜率 (+51.7 bps)" },
+    { "asset": "DXY", "value": "98.00", "change": "下跌", "direction": "down", "note": "测试关键支撑位，处于 6 周低点" },
+    { "asset": "Gold", "value": "$4,838.81", "change": "-0.02%", "direction": "neutral", "note": "维持在历史高位附近，避险需求仍在" },
+    { "asset": "WTI Crude", "value": "$91.19", "change": "-0.10%", "direction": "neutral", "note": "包含约 $20 的地缘政治供应溢价" },
+    { "asset": "BTC", "value": "$74,813.22", "change": "震荡", "direction": "neutral", "note": "在 $75,000 阻力位附近盘整" },
+    { "asset": "VIX", "value": "18.08", "change": "-1.53%", "direction": "down", "note": "偏高但处于下降趋势" }
+  ],
+
+  "risks": [
+    {
+      "title": "流动性短期紧缩风险",
+      "description": "随着美国报税日的到来，TGA 账户余额预计将激增至 1 万亿美元以上。在 RRP 已经归零的情况下，这将直接从银行准备金中抽取流动性，可能引发短期市场波动。"
+    },
+    {
+      "title": "市场广度背离风险",
+      "description": "标普 500 和纳斯达克指数屡创新高，但道琼斯指数下跌，且标普 500 中仅有 54.87% 的股票位于 200 日均线以上。这种由少数科技巨头驱动的上涨结构较为脆弱。"
+    },
+    {
+      "title": "地缘政治与通胀传导",
+      "description": "虽然中东停火谈判正在进行，但原油价格仍维持在 91 美元上方。能源价格的上涨可能在 3-6 个月内传导至核心通胀，从而限制美联储的降息空间。"
+    }
+  ],
+
+  "divergence": {
+    "status": "None",
+    "status_cn": "无明显背离",
+    "description": "目前财报季刚刚拉开帷幕，首批公布财报的金融巨头（如美国银行和摩根士丹利）在业绩超预期后股价均录得上涨，尚未观察到 Druckenmiller 框架中警惕的'盈利超预期但股价下跌'的 6 个月坏消息预警信号。我们将继续密切监控科技巨头财报发布后的价格反应。"
+  },
+
+  "references": [
+    { "id": 1, "source": "American Action Forum", "title": "Tracker: The Federal Reserve's Balance Sheet Assets", "url": "https://www.americanactionforum.org/insight/tracker-the-federal-reserves-balance-sheet/" },
+    { "id": 2, "source": "Flux Charts", "title": "Fed to Inject $40.5B Into Banking System", "url": "https://www.facebook.com/fluxcharts/posts/fed-to-inject-405b-into-banking-systemstarting-tomorrow-april-16-2026-the-new-yo/839650602486334/" },
+    { "id": 3, "source": "FRED", "title": "Overnight Reverse Repurchase Agreements", "url": "https://fred.stlouisfed.org/release/tables?eid=147896&rid=379" },
+    { "id": 4, "source": "Seeking Alpha", "title": "A $300 Billion Liquidity Storm May Be About To Hit The Market", "url": "https://seekingalpha.com/article/4890590-a-300-billion-liquidity-storm-may-be-about-to-hit-the-market" },
+    { "id": 5, "source": "Instagram", "title": "Net liquidity is in the system right now", "url": "https://www.instagram.com/p/DXJ8XlfCE75/" },
+    { "id": 6, "source": "MacroMicro", "title": "US - S&P 500 Stocks above 200-Day Average", "url": "https://en.macromicro.me/series/22718/sp-500-200ma-breadth" },
+    { "id": 7, "source": "MarketPulse", "title": "On track to all-time highs? Ceasefire may extend", "url": "https://www.marketpulse.com/markets/mid-week-market-update-ceasefire-set-to-extend-stocks-closing-to-ath/" }
+  ],
+
+  "disclaimer": "数据来源：Yahoo Finance / FRED / FMP / MarketPulse。仅供研究，非投资建议。"
+}

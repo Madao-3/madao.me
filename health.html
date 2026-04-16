@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MADAO — Trading Dashboard</title>
-  <meta name="description" content="MADAO AI Agent Dashboard — Druckenmiller-style daily macro trading signal analysis.">
+  <title>MADAO — Health</title>
+  <meta name="description" content="MADAO AI Agent Dashboard — Health tracking and biometrics.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +25,13 @@
       </button>
       <ul class="nav-links" id="nav-links">
         <li>
-          <a href="index.html" class="active">
+          <a href="index.html">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             Trading
           </a>
         </li>
         <li>
-          <a href="health.html">
+          <a href="health.html" class="active">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             Health
           </a>
@@ -46,10 +46,24 @@
     </div>
   </nav>
 
-  <!-- Trading Content (populated by JS) -->
-  <main id="trading-content"></main>
+  <!-- Content -->
+  <main>
+    <div class="coming-soon">
+      <svg class="coming-soon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <h2>Health Module</h2>
+      <p>Biometrics and health data visualization coming soon. This module will integrate data from wearable devices to provide comprehensive health insights.</p>
+      <div class="preview-areas">
+        <span class="preview-chip">Whoop Recovery</span>
+        <span class="preview-chip">Apple Watch</span>
+        <span class="preview-chip">Sleep Analysis</span>
+        <span class="preview-chip">HRV Trends</span>
+        <span class="preview-chip">Activity Tracking</span>
+      </div>
+    </div>
+  </main>
 
   <script src="js/nav.js"></script>
-  <script src="js/trading.js"></script>
 </body>
 </html>

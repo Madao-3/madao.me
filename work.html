@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MADAO — Trading Dashboard</title>
-  <meta name="description" content="MADAO AI Agent Dashboard — Druckenmiller-style daily macro trading signal analysis.">
+  <title>MADAO — Work</title>
+  <meta name="description" content="MADAO AI Agent Dashboard — Work log and project tracking.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
       </button>
       <ul class="nav-links" id="nav-links">
         <li>
-          <a href="index.html" class="active">
+          <a href="index.html">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             Trading
           </a>
@@ -37,7 +37,7 @@
           </a>
         </li>
         <li>
-          <a href="work.html">
+          <a href="work.html" class="active">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             Work
           </a>
@@ -46,10 +46,25 @@
     </div>
   </nav>
 
-  <!-- Trading Content (populated by JS) -->
-  <main id="trading-content"></main>
+  <!-- Content -->
+  <main>
+    <div class="coming-soon">
+      <svg class="coming-soon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>
+      <h2>Work Module</h2>
+      <p>Work log, project tracking, and productivity insights coming soon. This module will serve as a personal knowledge base and task management system.</p>
+      <div class="preview-areas">
+        <span class="preview-chip">Daily Log</span>
+        <span class="preview-chip">Project Tracker</span>
+        <span class="preview-chip">Code Commits</span>
+        <span class="preview-chip">Meeting Notes</span>
+        <span class="preview-chip">Goal Progress</span>
+      </div>
+    </div>
+  </main>
 
   <script src="js/nav.js"></script>
-  <script src="js/trading.js"></script>
 </body>
 </html>
