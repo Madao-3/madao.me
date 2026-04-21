@@ -1,6 +1,11 @@
 {
   "reports": [
     {
+      "date": "2026-04-21",
+      "score": 50.8,
+      "range": { "en": "Moderate", "zh": "中等确信度" }
+    },
+    {
       "date": "2026-04-20",
       "score": 54.4,
       "range": { "en": "Moderate", "zh": "中等确信度" }
@@ -26,5 +31,5 @@
       "range": { "en": "Moderate", "zh": "中等确信度" }
     }
   ],
-  "latest": "2026-04-20"
+  "latest": "2026-04-21"
 }
