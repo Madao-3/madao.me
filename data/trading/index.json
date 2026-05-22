@@ -1,100 +1,165 @@
 {
   "reports": [
     {
+      "date": "2026-05-22",
+      "score": 58.3,
+      "range": {
+        "en": "Low-Moderate",
+        "zh": "\u4f4e\u4e2d\u786e\u4fe1\u5ea6"
+      }
+    },
+    {
       "date": "2026-05-21",
       "score": 62.8,
-      "range": { "en": "Moderate-High", "zh": "中高确信度" }
+      "range": {
+        "en": "Moderate-High",
+        "zh": "\u4e2d\u9ad8\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-05-20",
       "score": 62.1,
-      "range": { "en": "Moderate-High", "zh": "中高确信度" }
+      "range": {
+        "en": "Moderate-High",
+        "zh": "\u4e2d\u9ad8\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-05-19",
       "score": 63.3,
-      "range": { "en": "Moderate-High", "zh": "中高确信度" }
+      "range": {
+        "en": "Moderate-High",
+        "zh": "\u4e2d\u9ad8\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-05-01",
       "score": 65.5,
-      "range": { "en": "Moderate-High", "zh": "中高确信度" }
+      "range": {
+        "en": "Moderate-High",
+        "zh": "\u4e2d\u9ad8\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-30",
       "score": 51.5,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-29",
       "score": 56.1,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-28",
       "score": 57.9,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-27",
       "score": 55.1,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-26",
       "score": 55.9,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-25",
       "score": 52.4,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-24",
       "score": 42.4,
-      "range": { "en": "Low Conviction", "zh": "低确信度" }
+      "range": {
+        "en": "Low Conviction",
+        "zh": "\u4f4e\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-23",
       "score": 50.2,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-22",
       "score": 46.0,
-      "range": { "en": "Low Conviction", "zh": "低确信度" }
+      "range": {
+        "en": "Low Conviction",
+        "zh": "\u4f4e\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-21",
       "score": 50.8,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-20",
       "score": 54.4,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-19",
       "score": 50.6,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-18",
       "score": 51.5,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-17",
       "score": 51.9,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     },
     {
       "date": "2026-04-16",
       "score": 64.0,
-      "range": { "en": "Moderate", "zh": "中等确信度" }
+      "range": {
+        "en": "Moderate",
+        "zh": "\u4e2d\u7b49\u786e\u4fe1\u5ea6"
+      }
     }
   ],
-  "latest": "2026-05-21"
+  "latest": "2026-05-22"
 }
