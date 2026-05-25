@@ -1,6 +1,14 @@
 {
   "reports": [
     {
+      "date": "2026-05-25",
+      "score": 63.75,
+      "range": {
+        "en": "Moderate Bullish",
+        "zh": "\u4e2d\u6027\u504f\u591a"
+      }
+    },
+    {
       "date": "2026-05-24",
       "score": 62.0,
       "range": {
@@ -177,5 +185,5 @@
       }
     }
   ],
-  "latest": "2026-05-24"
+  "latest": "2026-05-25"
 }
